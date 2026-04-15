@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import DeviceRegister from "./DeviceRegister";
+import Commissioning from "./Commissioning";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  const API_URL = "https://script.google.com/macros/s/AKfycbx3H57qB7uc5aeNKlLPC4yxn0P6JJnlDH9kZTno4A9Wpqj0_TnsqH9MnMQp_RgB82AA/exec";
-
-  useEffect(() => {
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(result => setData(result));
-  }, []);
+  const [page, setPage] = useState("register");
 
   return (
-    <div>
-      <h1>EVM Devices</h1>
-      <table border="1">
-        <tbody>
-          {data.map((row, i) => (
-            <tr key={i}>
-              {row.map((cell, j) => (
-                <td key={j}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div style={{ padding: 20 }}>
+      <h1>EVM Management</h1>
+
+      {/* Navigation */}
+      <button onClick={() => setPage("register")}>Device Register</button>
+      <button onClick={() => setPage("commission")}>Commissioning</button>
+
+      <hr />
+
+      {/* Pages */}
+      {page === "register" && <DeviceRegister />}
+      {page === "commission" && <Commissioning />}
     </div>
   );
 }
